@@ -26,17 +26,29 @@ Abra o terminal(CTRL + J)
 Inicialmente comecei analisando apenas o KFold comum, e percebi que a acurácia estava "enganosa", por conta que o mesmo participante aparecia tanto na classe "Drowsy" quanto na "Non Drowsy", e o KFold comum não impedia que imagens da mesma pessoa ficassem em treino e teste ao mesmo tempo, e tivemos um resultado "enganoso":
 
 *Teste com o KFold Comum*
+
 X format:  (20000, 1024)
+
 Y format:  (20000,)
+
 K=1 | Accuracy: 99.91% | Std: 0.06%
+
 K=2 | Accuracy: 99.91% | Std: 0.05%
+
 K=3 | Accuracy: 99.88% | Std: 0.06%
+
 K=4 | Accuracy: 99.88% | Std: 0.07%
+
 K=5 | Accuracy: 99.86% | Std: 0.07%
+
 K=6 | Accuracy: 99.85% | Std: 0.07%
+
 K=7 | Accuracy: 99.86% | Std: 0.07%
+
 K=8 | Accuracy: 99.83% | Std: 0.07%
+
 K=9 | Accuracy: 99.84% | Std: 0.07%
+
 K=10 | Accuracy: 99.82% | Std: 0.08%
 
 Best K: 1 | Best Accuracy: 99.91% | Std: 0.06%
@@ -44,17 +56,29 @@ Best K: 1 | Best Accuracy: 99.91% | Std: 0.06%
 Então, resolvi testar o GroupKFold, usando o código do participante como grupo, para garantir que a mesma pessoa não ficasse ao mesmo tempo no treino e no teste, e tive esse resultado:
 
 *Teste com o GroupKFold*
+
 X format:  (20000, 1024)
+
 Y format:  (20000,)
+
 K=1 | Accuracy: 63.36% | Std: 12.59%
+
 K=2 | Accuracy: 62.99% | Std: 12.97%
+
 K=3 | Accuracy: 62.05% | Std: 12.82%
+
 K=4 | Accuracy: 62.23% | Std: 12.99%
+
 K=5 | Accuracy: 61.75% | Std: 12.59%
+
 K=6 | Accuracy: 61.70% | Std: 12.72%
+
 K=7 | Accuracy: 61.84% | Std: 11.90%
+
 K=8 | Accuracy: 61.95% | Std: 12.04%
+
 K=9 | Accuracy: 60.71% | Std: 10.93%
+
 K=10 | Accuracy: 60.66% | Std: 11.03%
 
 Best K: 1 | Best Accuracy: 63.36% | Std: 12.59%
@@ -62,13 +86,19 @@ Best K: 1 | Best Accuracy: 63.36% | Std: 12.59%
 
 
 *Teste com o Naive Bayes*
+
 Fold 1: 48.98%
+
 Fold 2: 48.42%
+
 Fold 3: 78.46%
+
 Fold 4: 54.86%
+
 Fold 5: 58.91%
 
 Mean Accuracy: 57.93%
+
 Standard Deviation: 10.98%
 
 ----------
