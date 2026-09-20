@@ -24,22 +24,30 @@ limit = 10000
 
 # Loop through each class and read the images
 for classe_nome, label in classe.items():
+
     folder = os.path.join(dataset_path, classe_nome)
+
     archives = os.listdir(folder)
 
     archives = archives[:limit]
 
     # Loop through each image in the class folder
     for archive in archives:
+
         path = os.path.join(folder, archive)
+
         img = cv2.imread(path)
 
         if img is not None:
+
             img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
             img = cv2.resize(img, (32, 32))
+
             img = img.flatten()
 
             x.append(img)
+
             y.append(label)
 
 # Convert the lists to numpy arrays
@@ -60,13 +68,14 @@ kf = KFold(
     random_state=42
 )
 
-# Define the list between 1 and 20
-k_values = list(range(1, 21))
+# Define the list between 1 and 10
+k_values = list(range(1, 11))
 
 results = []
 
 # Loop through each value of k and execute the KNN with KFold
 for k in k_values:
+
     model = KNeighborsClassifier(
         n_neighbors=k
     )
@@ -80,9 +89,14 @@ for k in k_values:
     )
 
     media = scores.mean()
+
+    desvio = scores.std()
+
     results.append(media)
 
-    print(f"K={k} | Accuracy: {media * 100:.2f}%")
+    print(
+        f"K={k} | Accuracy: {media * 100:.2f}% | Std: {desvio * 100:.2f}%"
+    )
 
 # Find the best accuracy obtained
 best_accuracy = max(results)
@@ -90,6 +104,23 @@ best_accuracy = max(results)
 # Find the K value corresponding to the best accuracy
 best_k = k_values[results.index(best_accuracy)]
 
+# Calculate the standard deviation for the best K
+best_model = KNeighborsClassifier(
+    n_neighbors=best_k
+)
+
+best_scores = cross_val_score(
+    best_model,
+    x,
+    y,
+    cv=kf,
+    scoring='accuracy'
+)
+
+best_std = best_scores.std()
+
 print(
-    f"\nBest K: {best_k} | Best Accuracy: {best_accuracy * 100:.2f}%"
+    f"\nBest K: {best_k} | "
+    f"Best Accuracy: {best_accuracy * 100:.2f}% | "
+    f"Std: {best_std * 100:.2f}%"
 )
