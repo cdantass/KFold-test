@@ -103,41 +103,48 @@ Standard Deviation: 10.98%
 
 ----------
 
-*Comparação entre KNN e Naive Bayes*
+*Comparação entre os 4 algoritmos (GroupKFold)*
 
-Ao comparar os resultados obtidos utilizando GroupKFold, foi possível observar que o KNN apresentou a maior acurácia média entre os algoritmos avaliados.
+X format:  (20000, 1024)
 
-### KNN (GroupKFold)
+Y format:  (20000,)
 
-Accuracy: 63.36%
+Participantes únicos:  28
 
-Desvio Padrão: 12.59%
+Decision Tree | Accuracy: 52.22% | Std: 7.34%
 
-### Naive Bayes (GroupKFold)
+Random Forest | Accuracy: 52.75% | Std: 11.57%
 
-Mean Accuracy: 57.93%
+Naive Bayes | Accuracy: 54.09% | Std: 13.93%
 
-Desvio Padrão: 10.98%
+KNN (k=1) | Accuracy: 62.67% | Std: 10.26%
+
+KNN (k=2) | Accuracy: 62.68% | Std: 10.77%
+
+KNN (k=3) | Accuracy: 62.15% | Std: 10.69%
+
+KNN (k=4) | Accuracy: 62.26% | Std: 10.96%
+
+KNN (k=5) | Accuracy: 61.89% | Std: 11.04%
+
+KNN (k=6) | Accuracy: 61.87% | Std: 11.29%
+
+KNN (k=7) | Accuracy: 62.00% | Std: 11.70%
+
+KNN (k=8) | Accuracy: 62.11% | Std: 11.82%
+
+KNN (k=9) | Accuracy: 61.70% | Std: 11.76%
+
+KNN (k=10) | Accuracy: 61.86% | Std: 11.79%
+
+Melhor algoritmo: KNN (k=2) | Accuracy: 62.68% | Std: 10.77%
+
+----------
 
 ## Análise
 
-Ao observar apenas a acurácia, o KNN obteve o melhor resultado neste conjunto de dados. O melhor modelo encontrado foi o KNN com K = 1, alcançando 63.36% de acerto, enquanto o Naive Bayes atingiu 57.93%.
+O KNN foi o algoritmo com a melhor acurácia média, chegando a 62.68% com K = 2. Os outros três ficaram bem abaixo: Naive Bayes com 54.09%, Random Forest com 52.75% e Decision Tree com 52.22%. A diferença do KNN para o segundo colocado foi de cerca de 8 pontos percentuais, a maior diferença entre os algoritmos testados.
 
-Em relação à estabilidade, os dois algoritmos apresentaram valores relativamente próximos de desvio padrão. O Naive Bayes foi ligeiramente mais consistente entre os folds, mas essa diferença não foi suficiente para compensar a perda de desempenho observada na acurácia média.
+Dentro do próprio KNN, o valor de K quase não mudou o resultado. Do K=1 ao K=10 a acurácia ficou entre 61.70% e 62.68%, então escolher entre um K e outro não faz muita diferença nesse dataset.
 
-## Sobre custo computacional
-
-Embora o KNN tenha apresentado melhor desempenho neste experimento, ele também possui um custo computacional maior durante a fase de previsão. Isso acontece porque cada nova amostra precisa ser comparada com todas as amostras presentes no conjunto de treinamento para determinar seus vizinhos mais próximos.
-
-O Naive Bayes, por outro lado, possui treinamento e classificação bastante rápidos, sendo uma alternativa interessante quando o objetivo é reduzir tempo de execução ou trabalhar com conjuntos de dados maiores.
-
-### Conclusão
-
-Para o dataset utilizado e para o pré-processamento adotado, o KNN apresentou o melhor desempenho geral, atingindo 63.36% de acurácia com K = 1.
-
-O Naive Bayes apresentou um comportamento mais estável, porém obteve uma acurácia inferior ao KNN.
-
-Resumindo, a melhor escolha nesse projeto foi o algoritmo KNN, por conta do seu desempenho ter sido melhor. Embora o NB tenha apresentado uma estabilidade um pouco maior, essa vantagem foi pequena quando comparada ao ganho de desempenho obtido pelo KNN.
-
------
-Mas vale lembrar que não existe um algoritmo universalmente *MELHOR*, e sim o mais adequado para tal situação, dependendo do conjunto de dados, pré-processamento e da maneira que os dados serão avaliados ou testados.
+Decision Tree, Random Forest e Naive Bayes ficaram bem próximos entre si, e perto de 50%, que seria o acerto de um chute em um problema com duas classes. Ou seja, com imagens 32x32 em escala de cinza e pixels como atributos, esses modelos tiveram bastante dificuldade para generalizar para participantes que nunca viram no treino.
