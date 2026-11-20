@@ -1,0 +1,8 @@
+,K-Means,DBSCAN
+Acurácia,0.575,0.558
+ARI,0.0145,0.0037
+NMI,0.0107,0.0017
+Homogeneidade,0.0078,0.0011
+Completude,0.017,0.0035
+V-Measure,0.0107,0.0017
+Silhouette,0.5695,0.6591
