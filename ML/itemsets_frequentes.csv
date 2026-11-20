@@ -1,0 +1,20 @@
+﻿itemset,quantidade_itens,suporte
+Café Expresso,1,0.265265
+Pão de Queijo,1,0.265265
+Café Expresso + Pão de Queijo,2,0.246246
+Croissant de Manteiga,1,0.160160
+Cappuccino,1,0.160160
+Bolo de Cenoura,1,0.141141
+Cappuccino + Croissant de Manteiga,2,0.133133
+Café Coado,1,0.116116
+Sanduíche Natural,1,0.116116
+Suco de Laranja,1,0.114114
+Bolo de Cenoura + Café Coado,2,0.102102
+Sanduíche Natural + Suco de Laranja,2,0.084084
+Iced Coffee,1,0.079079
+Cookie de Chocolate,1,0.079079
+Chá Verde,1,0.074074
+Sanduíche de Peito de Peru,1,0.065065
+Chocolate Quente,1,0.056056
+Brownie,1,0.053053
+Cookie de Chocolate + Iced Coffee,2,0.052052

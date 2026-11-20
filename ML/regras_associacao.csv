@@ -1,0 +1,9 @@
+﻿antecedente,consequente,suporte,confianca,lift
+Sanduíche Natural,Suco de Laranja,0.084084,0.724138,6.345735
+Suco de Laranja,Sanduíche Natural,0.084084,0.736842,6.345735
+Bolo de Cenoura,Café Coado,0.102102,0.723404,6.230007
+Café Coado,Bolo de Cenoura,0.102102,0.879310,6.230007
+Cappuccino,Croissant de Manteiga,0.133133,0.831250,5.190117
+Croissant de Manteiga,Cappuccino,0.133133,0.831250,5.190117
+Café Expresso,Pão de Queijo,0.246246,0.928302,3.499523
+Pão de Queijo,Café Expresso,0.246246,0.928302,3.499523
