@@ -3,124 +3,96 @@
 import os
 import cv2
 import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
 
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import KFold, cross_val_score
 
+
 x = []
 y = []
 
-dataset_path = 'dataset'
+dataset_path = "dataset"
 
-classe = {
+classes = {
     "Drowsy": 0,
     "Non Drowsy": 1
 }
 
-# Limit the number of images to process for each class
 limit = 10000
+seed = 42
 
-# Loop through each class and read the images
-for classe_nome, label in classe.items():
-
-    folder = os.path.join(dataset_path, classe_nome)
-
+for class_name, label in classes.items():
+    folder = os.path.join(dataset_path, class_name)
     archives = os.listdir(folder)
+
+    rng = np.random.RandomState(seed)
+    rng.shuffle(archives)
 
     archives = archives[:limit]
 
-    # Loop through each image in the class folder
     for archive in archives:
-
         path = os.path.join(folder, archive)
+        image = cv2.imread(path)
 
-        img = cv2.imread(path)
+        if image is None:
+            continue
 
-        if img is not None:
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        image = cv2.resize(image, (32, 32))
+        image = image.flatten()
 
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        x.append(image)
+        y.append(label)
 
-            img = cv2.resize(img, (32, 32))
-
-            img = img.flatten()
-
-            x.append(img)
-
-            y.append(label)
-
-# Convert the lists to numpy arrays
 x = np.array(x)
 y = np.array(y)
 
-# Normalize the pixels to the range [0, 1]
 x = x.astype(np.float32) / 255.0
 
-print("X format: ", x.shape)
-print("Y format: ", y.shape)
+print("Formato de X:", x.shape)
+print("Formato de Y:", y.shape)
 
-# ----------------
-
-kf = KFold(
+kfold = KFold(
     n_splits=5,
     shuffle=True,
-    random_state=42
+    random_state=seed
 )
 
-# Define the list between 1 and 10
-k_values = list(range(1, 11))
-
+k_values = range(1, 21)
 results = []
 
-# Loop through each value of k and execute the KNN with KFold
 for k in k_values:
-
-    model = KNeighborsClassifier(
-        n_neighbors=k
-    )
+    model = KNeighborsClassifier(n_neighbors=k)
 
     scores = cross_val_score(
         model,
         x,
         y,
-        cv=kf,
-        scoring='accuracy'
+        cv=kfold,
+        scoring="accuracy"
     )
 
-    media = scores.mean()
+    average = scores.mean()
+    standard_deviation = scores.std()
 
-    desvio = scores.std()
-
-    results.append(media)
+    results.append({
+        "k": k,
+        "accuracy": average,
+        "std": standard_deviation
+    })
 
     print(
-        f"K={k} | Accuracy: {media * 100:.2f}% | Std: {desvio * 100:.2f}%"
+        f"K={k} | "
+        f"Acurácia: {average * 100:.2f}% | "
+        f"Desvio: {standard_deviation * 100:.2f}%"
     )
 
-# Find the best accuracy obtained
-best_accuracy = max(results)
-
-# Find the K value corresponding to the best accuracy
-best_k = k_values[results.index(best_accuracy)]
-
-# Calculate the standard deviation for the best K
-best_model = KNeighborsClassifier(
-    n_neighbors=best_k
+best_result = max(
+    results,
+    key=lambda result: result["accuracy"]
 )
 
-best_scores = cross_val_score(
-    best_model,
-    x,
-    y,
-    cv=kf,
-    scoring='accuracy'
-)
-
-best_std = best_scores.std()
-
-print(
-    f"\nBest K: {best_k} | "
-    f"Best Accuracy: {best_accuracy * 100:.2f}% | "
-    f"Std: {best_std * 100:.2f}%"
-)
+print("\nMelhor resultado")
+print(f"K: {best_result['k']}")
+print(f"Acurácia: {best_result['accuracy'] * 100:.2f}%")
+print(f"Desvio padrão: {best_result['std'] * 100:.2f}%")
