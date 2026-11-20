@@ -24,15 +24,20 @@ limit = 10000
 
 # Loop through each class and read the images
 for classe_nome, label in classe.items():
+<<<<<<< HEAD
 
     folder = os.path.join(dataset_path, classe_nome)
 
+=======
+    folder = os.path.join(dataset_path, classe_nome)
+>>>>>>> origin/main
     archives = os.listdir(folder)
 
     archives = archives[:limit]
 
     # Loop through each image in the class folder
     for archive in archives:
+<<<<<<< HEAD
 
         path = os.path.join(folder, archive)
 
@@ -48,6 +53,17 @@ for classe_nome, label in classe.items():
 
             x.append(img)
 
+=======
+        path = os.path.join(folder, archive)
+        img = cv2.imread(path)
+
+        if img is not None:
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            img = cv2.resize(img, (32, 32))
+            img = img.flatten()
+
+            x.append(img)
+>>>>>>> origin/main
             y.append(label)
 
 # Convert the lists to numpy arrays
@@ -68,14 +84,22 @@ kf = KFold(
     random_state=42
 )
 
+<<<<<<< HEAD
 # Define the list between 1 and 10
 k_values = list(range(1, 11))
+=======
+# Define the list between 1 and 20
+k_values = list(range(1, 21))
+>>>>>>> origin/main
 
 results = []
 
 # Loop through each value of k and execute the KNN with KFold
 for k in k_values:
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
     model = KNeighborsClassifier(
         n_neighbors=k
     )
@@ -89,6 +113,7 @@ for k in k_values:
     )
 
     media = scores.mean()
+<<<<<<< HEAD
 
     desvio = scores.std()
 
@@ -97,6 +122,11 @@ for k in k_values:
     print(
         f"K={k} | Accuracy: {media * 100:.2f}% | Std: {desvio * 100:.2f}%"
     )
+=======
+    results.append(media)
+
+    print(f"K={k} | Accuracy: {media * 100:.2f}%")
+>>>>>>> origin/main
 
 # Find the best accuracy obtained
 best_accuracy = max(results)
@@ -104,6 +134,7 @@ best_accuracy = max(results)
 # Find the K value corresponding to the best accuracy
 best_k = k_values[results.index(best_accuracy)]
 
+<<<<<<< HEAD
 # Calculate the standard deviation for the best K
 best_model = KNeighborsClassifier(
     n_neighbors=best_k
@@ -123,4 +154,8 @@ print(
     f"\nBest K: {best_k} | "
     f"Best Accuracy: {best_accuracy * 100:.2f}% | "
     f"Std: {best_std * 100:.2f}%"
+=======
+print(
+    f"\nBest K: {best_k} | Best Accuracy: {best_accuracy * 100:.2f}%"
+>>>>>>> origin/main
 )
